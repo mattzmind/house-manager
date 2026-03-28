@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,29 +13,24 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:#faf9f7;min-height:100vh;max-width:520px;margin:0 auto;padding-bottom:90px;font-size:16px}
-button,input,select{font-family:inherit}
-button{cursor:pointer}
-input{-webkit-appearance:none}
+button,input,select{font-family:inherit}button{cursor:pointer}input{-webkit-appearance:none}
 
 .header{background:linear-gradient(135deg,#1a3a2a,#2d6a4f,#40916c);padding:32px 22px 24px;color:#fff;position:relative;overflow:hidden}
-.header::before{content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%}
-.header::after{content:'';position:absolute;bottom:-30px;left:30%;width:180px;height:180px;background:rgba(255,255,255,.04);border-radius:50%}
-.header h1{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:-.5px;font-weight:400;position:relative;z-index:1}
+.header::before{content:’’;position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%}
+.header::after{content:’’;position:absolute;bottom:-30px;left:30%;width:180px;height:180px;background:rgba(255,255,255,.04);border-radius:50%}
+.header h1{font-family:‘DM Serif Display’,serif;font-size:28px;letter-spacing:-.5px;font-weight:400;position:relative;z-index:1}
 .header .sub{font-size:13px;opacity:.5;margin-top:5px;letter-spacing:.5px;text-transform:uppercase;position:relative;z-index:1}
 .tab-bar{display:flex;background:#fff;border-bottom:1px solid #e8e5e0;position:sticky;top:0;z-index:100}
 .tab-btn{flex:1;padding:14px 0 12px;border:none;background:none;font-size:15px;color:#999;border-bottom:2.5px solid transparent;transition:all .2s}
 .tab-btn.active{font-weight:600;color:#2d3436;border-bottom-color:#2d3436}
 .tab-btn .ico{font-size:20px;display:block;margin-bottom:2px}
-.content{padding:0 18px}
-.hidden{display:none}
+.content{padding:0 18px}.hidden{display:none}
 
-/* Shared */
 .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .pill{padding:8px 14px;border-radius:8px;font-size:14px;border:1px solid #ddd;background:#fff}
 .pill.on{border:2px solid #2d3436;background:#f0f0f0;font-weight:600}
 .banner{border-radius:14px;padding:16px 18px;margin:18px 0;display:flex;justify-content:space-between;align-items:center}
-.blabel{font-weight:600;font-size:17px}
-.bsub{font-size:14px;color:#666;margin-top:3px}
+.blabel{font-weight:600;font-size:17px}.bsub{font-size:14px;color:#666;margin-top:3px}
 .addbtn{width:100%;padding:16px;border-radius:12px;border:2px dashed #ccc;background:#fff;font-size:16px;color:#888;font-weight:500}
 .fbox{background:#fff;border-radius:14px;padding:18px;border:1px solid #ddd;margin-bottom:14px}
 .finput{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #ddd;font-size:16px;margin-bottom:12px}
@@ -43,11 +39,34 @@ input{-webkit-appearance:none}
 .btns{padding:13px 18px;border-radius:10px;border:1px solid #ddd;background:#fff;font-size:16px;color:#666}
 .btndanger{padding:10px 16px;border-radius:8px;border:1px solid #e57373;background:#fff;font-size:14px;color:#c62828}
 .rbtn{padding:8px 14px;border-radius:8px;border:1px solid #ccc;background:#fff;font-size:14px;color:#666}
+.actions{display:flex;gap:8px;margin-top:8px}.act{font-size:13px;color:#999;background:none;border:none;padding:3px 8px;text-decoration:underline}
 
-/* Item actions row */
-.actions{display:flex;gap:8px;margin-top:8px}
-.act{font-size:13px;color:#999;background:none;border:none;padding:3px 8px;text-decoration:underline}
-.act:hover{color:#555}
+/* Weekly calendar bar */
+.week-bar{display:flex;gap:4px;margin:18px 0 14px}
+.day-btn{flex:1;text-align:center;padding:10px 0;border-radius:12px;border:1.5px solid #e8e5e0;background:#fff;font-size:13px;color:#888;transition:all .15s}
+.day-btn .dn{font-size:11px;font-weight:400;display:block;margin-top:1px}
+.day-btn.today{border-color:#2d6a4f;color:#2d6a4f;font-weight:600}
+.day-btn.sel{background:#2d3436;color:#fff;border-color:#2d3436;font-weight:600}
+.day-btn.sel.today{background:#2d6a4f;border-color:#2d6a4f}
+.day-btn.has-due::after{content:’’;display:block;width:6px;height:6px;border-radius:50%;background:#e65100;margin:4px auto 0}
+
+/* View toggles */
+.vtoggle{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
+.vpill{padding:8px 16px;border-radius:18px;border:1px solid #ddd;background:#fff;color:#666;font-size:14px;white-space:nowrap}
+.vpill.on{border:1.5px solid #2d3436;background:#2d3436;color:#fff;font-weight:600}
+
+/* Chore card */
+.cc{background:#fff;border-radius:12px;padding:14px;margin-bottom:6px;border:1px solid #eee;display:flex;align-items:center;gap:12px}
+.cc.ccdn{background:#fafafa;border-color:#e8f5e9;opacity:.55}
+.cc.overdue-card{border-left:3px solid #e65100}
+.cchk{width:38px;height:38px;border-radius:9px;flex-shrink:0;border:2.5px solid #4a7c59;background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px}
+.cchk.on{border:none;background:#4a7c59}
+.skip-btn{width:38px;height:38px;border-radius:9px;flex-shrink:0;border:2px solid #ccc;background:#fff;display:flex;align-items:center;justify-content:center;color:#999;font-size:18px}
+.ctit{font-size:16px;font-weight:500}.cmeta{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;align-items:center}.cmeta span{font-size:13px}
+.fbadge{flex-shrink:0;font-size:13px;font-weight:600;background:#f0f0f0;padding:6px 12px;border-radius:8px;color:#555;white-space:nowrap}
+.count-badge{font-size:12px;color:#4a7c59;font-weight:600;background:#e8f5e9;padding:3px 8px;border-radius:6px}
+.zh{display:flex;align-items:center;justify-content:space-between;padding:10px 4px 8px;border-bottom:1.5px solid #e8e5e0;margin-bottom:8px}
+.zl{font-size:16px;font-weight:600;color:#2d3436}.zd{font-size:13px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:12px;font-weight:600}
 
 /* Season */
 .spills{display:flex;gap:8px;margin:18px 0 14px;overflow-x:auto;padding-bottom:2px}
@@ -61,28 +80,11 @@ input{-webkit-appearance:none}
 .crow{display:flex;gap:12px;align-items:flex-start}
 .chk{width:26px;height:26px;border-radius:7px;flex-shrink:0;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;margin-top:1px;background:#fff;cursor:pointer}
 .chk.on{border:none}
-.ctitle{font-size:16px;font-weight:500}
-.ctitle.struck{text-decoration:line-through;color:#999}
+.ctitle{font-size:16px;font-weight:500}.ctitle.struck{text-decoration:line-through;color:#999}
 .tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center}
-.tg{font-size:13px;background:#f0f0f0;padding:3px 10px;border-radius:5px;color:#666}
-.tg.pri{background:#fff3e0;color:#e65100;font-weight:600}
-.cnote{font-size:14px;color:#888;margin-top:6px;font-style:italic}
-.cdate{font-size:13px;color:#aaa;margin-top:5px}
+.tg{font-size:13px;background:#f0f0f0;padding:3px 10px;border-radius:5px;color:#666}.tg.pri{background:#fff3e0;color:#e65100;font-weight:600}
+.cnote{font-size:14px;color:#888;margin-top:6px;font-style:italic}.cdate{font-size:13px;color:#aaa;margin-top:5px}
 
-/* Chores */
-.cc{background:#fff;border-radius:12px;padding:14px 14px;margin-bottom:6px;border:1px solid #eee;display:flex;align-items:center;gap:12px}
-.cc.ccdn{background:#fafafa;border-color:#e8f5e9;opacity:.55}
-.cchk{width:38px;height:38px;border-radius:9px;flex-shrink:0;border:2.5px solid #4a7c59;background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px}
-.cchk.on{border:none;background:#4a7c59}
-.ctit{font-size:16px;font-weight:500}
-.cmeta{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;align-items:center}
-.cmeta span{font-size:13px}
-.fbadge{flex-shrink:0;font-size:13px;font-weight:600;background:#f0f0f0;padding:6px 12px;border-radius:8px;color:#555;white-space:nowrap}
-.zh{display:flex;align-items:center;justify-content:space-between;padding:10px 4px 8px;border-bottom:1.5px solid #e8e5e0;margin-bottom:8px}
-.zl{font-size:16px;font-weight:600;color:#2d3436}
-.zd{font-size:13px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:12px;font-weight:600}
-
-/* Projects */
 .fpills{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
 .fpill{padding:8px 16px;border-radius:18px;border:1px solid #ddd;background:#fff;color:#666;font-size:14px;white-space:nowrap}
 .fpill.on{border:1.5px solid #2d3436;background:#2d3436;color:#fff;font-weight:600}
@@ -90,15 +92,13 @@ input{-webkit-appearance:none}
 .pcard.pdn{opacity:.55}
 .pchk{width:32px;height:32px;border-radius:8px;flex-shrink:0;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;margin-top:2px;background:#fff;cursor:pointer}
 .pchk.on{border:none;background:#4a7c59}
-
 .empty{text-align:center;padding:36px 0;color:#bbb;font-size:16px}
 .upd{text-align:center;padding:14px 0;margin-top:10px;font-size:15px;color:#4a7c59;font-weight:500}
-
-/* Modal overlay for edit */
 .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:200;display:flex;align-items:flex-end;justify-content:center}
 .modal{background:#fff;border-radius:18px 18px 0 0;padding:24px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
 .modal h3{font-size:19px;font-weight:600;margin-bottom:16px}
 </style>
+
 </head>
 <body>
 <div class="header"><h1>🏡 House Manager</h1><div class="sub">Stay on top of it all</div></div>
@@ -116,8 +116,9 @@ input{-webkit-appearance:none}
 
 <script>
 // ══════════════════════════════════════
-// DATA DEFAULTS
+// DATA — days: array of day numbers (0=Sun,1=Mon,...6=Sat), empty=any day
 // ══════════════════════════════════════
+const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const DEF_MAINT={
   spring:[
     {id:"s1",task:"Clean air conditioner — coils, filters, clear drain line",area:"HVAC",effort:"DIY/Pro",cost:"$0–150",priority:"high",note:"Do before it gets hot"},
@@ -150,26 +151,46 @@ const DEF_MAINT={
     {id:"w5",task:"Re-soil houseplants (winter repotting)",area:"Interior",effort:"DIY",cost:"$15–30",priority:"low"},
   ],
 };
+
 const DEF_CHORES=[
-  {id:"c1",task:"Clean toilets and shower",frequency:"2x/month",zone:"Bathrooms",minutes:25},
-  {id:"c2",task:"Clean bathroom and bedroom mirrors",frequency:"2x/month",zone:"Bath/Bedrooms",minutes:10},
-  {id:"c3",task:"Clean house windows",frequency:"1x/month",zone:"Whole House",minutes:30},
-  {id:"c4",task:"Mop floors",frequency:"1x/month",zone:"Whole House",minutes:25},
-  {id:"c5",task:"Buddha bath",frequency:"1x/month",zone:"Dogs",minutes:30},
-  {id:"c6",task:"Buddha flea meds",frequency:"Every 6 weeks",zone:"Dogs",minutes:5},
-  {id:"c7",task:"Deep clean fridge",frequency:"1x/month",zone:"Kitchen",minutes:30},
-  {id:"c8",task:"Wash bedding",frequency:"Weekly",zone:"Bedrooms",minutes:15},
-  {id:"c9",task:"Wash trash cans",frequency:"Every 2 months",zone:"Whole House",minutes:20},
-  {id:"c10",task:"Wash Buddha's bed",frequency:"2x/month",zone:"Dogs",minutes:15},
-  {id:"c11",task:"Clean kitchen counters (deep clean)",frequency:"2x/month",zone:"Kitchen",minutes:15},
-  {id:"c12",task:"Wash couch cushion covers",frequency:"1x/month",zone:"Living Room",minutes:15},
-  {id:"c13",task:"Wash kitchen seat covers",frequency:"1x/month",zone:"Kitchen",minutes:10},
-  {id:"c14",task:"Clean Bennet's car seat",frequency:"Weekly",zone:"Car",minutes:20},
-  {id:"c15",task:"Wash car",frequency:"1x/month",zone:"Car",minutes:30},
-  {id:"c16",task:"Wash bedroom curtains",frequency:"Every 2 months",zone:"Bedrooms",minutes:15},
-  {id:"c17",task:"Clean floor fans and A/C filters",frequency:"1x/month",zone:"Whole House",minutes:20},
-  {id:"c18",task:"Clean bedroom ceiling fans",frequency:"1x/month",zone:"Bedrooms",minutes:15},
+  // Daily
+  {id:"c19",task:"William kitchen & living room",frequency:"Daily",zone:"Kitchen",minutes:15,days:[0,1,2,3,4,5,6]},
+  {id:"c20",task:"Water outside plants",frequency:"Daily",zone:"Whole House",minutes:10,days:[0,1,2,3,4,5,6]},
+  // Weekly with specific days
+  {id:"c8",task:"Wash bedding",frequency:"Weekly",zone:"Bedrooms",minutes:15,days:[0]},
+  {id:"c21",task:"Pay Dende",frequency:"Weekly",zone:"Kitchen",minutes:5,days:[6]},
+  {id:"c22",task:"Order Dende",frequency:"Weekly",zone:"Kitchen",minutes:5,days:[2]},
+  {id:"c23",task:"Laundry white",frequency:"Weekly",zone:"Bedrooms",minutes:15,days:[3]},
+  {id:"c24",task:"Laundry Bennet",frequency:"Weekly",zone:"Bedrooms",minutes:15,days:[3]},
+  {id:"c25",task:"Harry Craig",frequency:"Weekly",zone:"Whole House",minutes:10,days:[3]},
+  {id:"c26",task:"Harry Kristen",frequency:"Weekly",zone:"Whole House",minutes:10,days:[3]},
+  {id:"c27",task:"Harry Matt & Gabby",frequency:"Weekly",zone:"Whole House",minutes:10,days:[3]},
+  {id:"c28",task:"Laundry black",frequency:"Weekly",zone:"Bedrooms",minutes:15,days:[5]},
+  {id:"c29",task:"Refill vitamins",frequency:"Weekly",zone:"Kitchen",minutes:5,days:[6]},
+  {id:"c30",task:"Water inside plants",frequency:"Weekly",zone:"Whole House",minutes:10,days:[0,4]},
+  {id:"c31",task:"Water cactus",frequency:"Weekly",zone:"Whole House",minutes:5,days:[0,4]},
+  {id:"c14",task:"Clean Bennet's car seat",frequency:"Weekly",zone:"Car",minutes:20,days:[2]},
+  // 2x/month with specific day
+  {id:"c5",task:"Buddha bath",frequency:"2x/month",zone:"Dogs",minutes:30,days:[3]},
+  {id:"c1",task:"Clean toilets and shower",frequency:"2x/month",zone:"Bathrooms",minutes:25,days:[]},
+  {id:"c2",task:"Clean bathroom and bedroom mirrors",frequency:"2x/month",zone:"Bath/Bedrooms",minutes:10,days:[]},
+  {id:"c10",task:"Wash Buddha's bed",frequency:"2x/month",zone:"Dogs",minutes:15,days:[]},
+  {id:"c11",task:"Clean kitchen counters (deep clean)",frequency:"2x/month",zone:"Kitchen",minutes:15,days:[]},
+  // Monthly
+  {id:"c3",task:"Clean house windows",frequency:"1x/month",zone:"Whole House",minutes:30,days:[]},
+  {id:"c4",task:"Mop floors",frequency:"1x/month",zone:"Whole House",minutes:25,days:[]},
+  {id:"c7",task:"Deep clean fridge",frequency:"1x/month",zone:"Kitchen",minutes:30,days:[]},
+  {id:"c12",task:"Wash couch cushion covers",frequency:"1x/month",zone:"Living Room",minutes:15,days:[]},
+  {id:"c13",task:"Wash kitchen seat covers",frequency:"1x/month",zone:"Kitchen",minutes:10,days:[]},
+  {id:"c15",task:"Wash car",frequency:"1x/month",zone:"Car",minutes:30,days:[]},
+  {id:"c17",task:"Clean floor fans and A/C filters",frequency:"1x/month",zone:"Whole House",minutes:20,days:[]},
+  {id:"c18",task:"Clean bedroom ceiling fans",frequency:"1x/month",zone:"Bedrooms",minutes:15,days:[]},
+  // 6 weeks+
+  {id:"c6",task:"Buddha flea meds",frequency:"Every 6 weeks",zone:"Dogs",minutes:5,days:[]},
+  {id:"c9",task:"Wash trash cans",frequency:"Every 2 months",zone:"Whole House",minutes:20,days:[]},
+  {id:"c16",task:"Wash bedroom curtains",frequency:"Every 2 months",zone:"Bedrooms",minutes:15,days:[]},
 ];
+
 const DEF_PROJECTS=[
   {id:"p-1",task:"Reseal bathroom grout with silicone (mold removal & prevention)",priority:"high",cost:"$20–50 DIY",category:"repair",added:new Date().toISOString(),done:false,doneDate:null},
   {id:"p-2",task:"Reseal windows with silicone",priority:"medium",cost:"$15–40 DIY",category:"repair",added:new Date().toISOString(),done:false,doneDate:null},
@@ -178,37 +199,37 @@ const DEF_PROJECTS=[
 
 // Config
 const SEASONS={spring:{label:"Spring",icon:"🌱",color:"#4a7c59",bg:"#f0f7f1"},summer:{label:"Summer",icon:"☀️",color:"#c4762b",bg:"#fdf6ee"},fall:{label:"Fall",icon:"🍂",color:"#8b5e3c",bg:"#faf3ed"},winter:{label:"Winter",icon:"❄️",color:"#4a6b8a",bg:"#eef3f8"}};
-const FO={"Weekly":1,"2x/month":2,"1x/month":3,"Every 6 weeks":4,"Every 2 months":5};
-const FD={"Weekly":7,"2x/month":14,"1x/month":30,"Every 6 weeks":42,"Every 2 months":60};
-const FREQS=["Weekly","2x/month","1x/month","Every 6 weeks","Every 2 months"];
+const FO={"Daily":0,"Weekly":1,"2x/month":2,"1x/month":3,"Every 6 weeks":4,"Every 2 months":5};
+const FD={"Daily":1,"Weekly":7,"2x/month":14,"1x/month":30,"Every 6 weeks":42,"Every 2 months":60};
+const FREQS=["Daily","Weekly","2x/month","1x/month","Every 6 weeks","Every 2 months"];
 const ZC={"Bathrooms":{icon:"🚿",label:"Bathrooms"},"Bath/Bedrooms":{icon:"🪞",label:"Bath & Bedrooms"},"Bedrooms":{icon:"🛏️",label:"Bedrooms"},"Kitchen":{icon:"🍳",label:"Kitchen"},"Living Room":{icon:"🛋️",label:"Living Room"},"Dogs":{icon:"🐕",label:"Dogs"},"Car":{icon:"🚗",label:"Car"},"Whole House":{icon:"🏠",label:"Whole House"}};
 const ZO=["Bathrooms","Bath/Bedrooms","Kitchen","Living Room","Bedrooms","Dogs","Car","Whole House"];
-const EFFORTS=["DIY","DIY/Pro","Pro"];
-const PRIORITIES=["high","medium","low"];
+const EFFORTS=["DIY","DIY/Pro","Pro"];const PRIORITIES=["high","medium","low"];
 const CATS=[{key:"repair",label:"Repair",icon:"🔨"},{key:"upgrade",label:"Upgrade",icon:"⬆️"},{key:"cosmetic",label:"Cosmetic",icon:"🎨"},{key:"yard",label:"Yard",icon:"🌿"},{key:"organize",label:"Organize",icon:"📦"},{key:"other",label:"Other",icon:"📌"}];
 const PC={high:{bg:"#fff3e0",color:"#e65100",label:"High"},medium:{bg:"#e3f2fd",color:"#1565c0",label:"Med"},low:{bg:"#f0f0f0",color:"#666",label:"Low"}};
 
 // ══════════════════════════════════════
-// STORAGE
+// STORAGE — v4 keys to avoid conflicts
 // ══════════════════════════════════════
 function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}}
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v))}
 
-let maintTasks=ld("hm3-maint",null)||JSON.parse(JSON.stringify(DEF_MAINT));
-let maintDone=ld("hm3-maintdone",{});
-let chores=ld("hm3-chores",null)||[...DEF_CHORES];
-let choreLog=ld("hm3-chorelog",{});
-let projects=ld("hm3-projects",null)||[...DEF_PROJECTS];
-// Persist defaults on first load
-if(!ld("hm3-maint",null)){sv("hm3-maint",maintTasks)}
-if(!ld("hm3-chores",null)){sv("hm3-chores",chores)}
-if(!ld("hm3-projects",null)){sv("hm3-projects",projects)}
+let maintTasks=ld("hm4-maint",null)||JSON.parse(JSON.stringify(DEF_MAINT));
+let maintDone=ld("hm4-maintdone",{});
+let chores=ld("hm4-chores",null)||JSON.parse(JSON.stringify(DEF_CHORES));
+let choreLog=ld("hm4-chorelog",{}); // {choreId: lastDoneISO}
+let choreCount=ld("hm4-chorecount",{}); // {choreId: number}
+let choreSkips=ld("hm4-choreskips",{}); // {choreId: lastSkipISO}
+let projects=ld("hm4-projects",null)||[...DEF_PROJECTS];
+if(!ld("hm4-maint",null))sv("hm4-maint",maintTasks);
+if(!ld("hm4-chores",null))sv("hm4-chores",chores);
+if(!ld("hm4-projects",null))sv("hm4-projects",projects);
 
-function saveMaint(){sv("hm3-maint",maintTasks)}
-function saveMaintDone(){sv("hm3-maintdone",maintDone)}
-function saveChores(){sv("hm3-chores",chores)}
-function saveChoreLog(){sv("hm3-chorelog",choreLog)}
-function saveProjects(){sv("hm3-projects",projects)}
+function saveMaint(){sv("hm4-maint",maintTasks)}
+function saveMaintDone(){sv("hm4-maintdone",maintDone)}
+function saveChores(){sv("hm4-chores",chores)}
+function saveChoreLogs(){sv("hm4-chorelog",choreLog);sv("hm4-chorecount",choreCount);sv("hm4-choreskips",choreSkips)}
+function saveProjects(){sv("hm4-projects",projects)}
 
 // ══════════════════════════════════════
 // STATE
@@ -216,9 +237,10 @@ function saveProjects(){sv("hm3-projects",projects)}
 let curTab="chores";
 let curSeason=(()=>{const m=new Date().getMonth();if(m>=2&&m<=4)return"spring";if(m>=5&&m<=7)return"summer";if(m>=8&&m<=10)return"fall";return"winter"})();
 let projFilter="all";
-let choreView="due"; // "due", "zone", or a frequency string
+let choreView="week"; // "week","due","all"
+let selectedDay=new Date().getDay(); // 0-6
 let showForm={maint:false,chore:false,proj:false};
-let editItem=null; // {type, id, season?}
+let editItem=null;
 
 // ══════════════════════════════════════
 // HELPERS
@@ -227,440 +249,375 @@ function fmtDate(d){return new Date(d).toLocaleDateString("en-US",{month:"short"
 function daysAgo(d){const x=Math.floor((Date.now()-new Date(d).getTime())/864e5);if(x===0)return"Today";if(x===1)return"Yesterday";return x+"d ago"}
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function isOverdue(c){
+  const last=choreLog[c.id];const skipped=choreSkips[c.id];
+  const latest=last&&skipped?(new Date(last)>new Date(skipped)?last:skipped):(last||skipped);
+  if(!latest)return true;
+  const ds=Math.floor((Date.now()-new Date(latest).getTime())/864e5);
+  return ds>=(FD[c.frequency]||30);
+}
+function isDoneToday(c){
+  const last=choreLog[c.id];
+  if(!last)return false;
+  const d=new Date(last),t=new Date();
+  return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+}
+function isSkippedToday(c){
+  const s=choreSkips[c.id];
+  if(!s)return false;
+  const d=new Date(s),t=new Date();
+  return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+}
+function isDueForDay(c,dayNum){
+  // For daily chores: due every day, only "done" if completed/skipped today
+  if(c.frequency==="Daily"){
+    if(dayNum===new Date().getDay()) return !(isDoneToday(c)||isSkippedToday(c));
+    return true; // other days always show as pending (can't pre-complete)
+  }
+  return isOverdue(c);
+}
+function getUrgency(c){
+  const last=choreLog[c.id];const skipped=choreSkips[c.id];
+  const latest=last&&skipped?(new Date(last)>new Date(skipped)?last:skipped):(last||skipped);
+  if(!latest)return 1;
+  const ds=Math.floor((Date.now()-new Date(latest).getTime())/864e5);
+  const cycle=FD[c.frequency]||30;
+  return(ds-cycle)/cycle;
+}
+function isScheduledForDay(c,dayNum){
+  if(!c.days||c.days.length===0)return false;
+  return c.days.includes(dayNum);
+}
 
-function pillSelect(containerId, dataAttr, current) {
-  document.querySelectorAll(`#${containerId} .pill`).forEach(b=>{
-    if(b.dataset[dataAttr]===current)b.classList.add("on");
-    b.addEventListener("click",()=>{
-      document.querySelectorAll(`#${containerId} .pill`).forEach(x=>x.classList.remove("on"));
-      b.classList.add("on");
-    });
-  });
-}
-function getSelected(containerId, dataAttr, fallback){
-  const on=document.querySelector(`#${containerId} .pill.on`);
-  return on?on.dataset[dataAttr]:fallback;
-}
+function pillSelect(cid,da,cur){document.querySelectorAll(`#${cid} .pill`).forEach(b=>{if(b.dataset[da]===cur)b.classList.add("on");b.addEventListener("click",()=>{document.querySelectorAll(`#${cid} .pill`).forEach(x=>x.classList.remove("on"));b.classList.add("on")})})}
+function getSelected(cid,da,fb){const on=document.querySelector(`#${cid} .pill.on`);return on?on.dataset[da]:fb}
 
 // ══════════════════════════════════════
 // TABS
 // ══════════════════════════════════════
 document.querySelectorAll(".tab-btn").forEach(b=>b.addEventListener("click",()=>{
   curTab=b.dataset.tab;showForm={maint:false,chore:false,proj:false};editItem=null;
-  document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");render();
+  document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");render();
 }));
-
-function render(){
-  ["maintenance","chores","projects"].forEach(t=>{document.getElementById("tab-"+t).className=curTab===t?"":"hidden"});
-  if(curTab==="maintenance")renderMaint();
-  if(curTab==="chores")renderChores();
-  if(curTab==="projects")renderProjects();
-}
+function render(){["maintenance","chores","projects"].forEach(t=>{document.getElementById("tab-"+t).className=curTab===t?"":"hidden"});
+if(curTab==="maintenance")renderMaint();if(curTab==="chores")renderChores();if(curTab==="projects")renderProjects()}
 
 // ══════════════════════════════════════
-// MODAL (for edit)
+// MODAL
 // ══════════════════════════════════════
 function closeModal(){editItem=null;document.getElementById("modal-root").innerHTML="";render()}
-
-function showEditModal(type, item, season){
+function showEditModal(type,item,season){
   editItem={type,id:item.id,season};
   let h=`<div class="overlay" id="modal-overlay"><div class="modal"><h3>Edit ${type==="maint"?"Seasonal Item":type==="chore"?"Chore":"Project"}</h3>`;
-
   if(type==="maint"){
-    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}">
-    <input class="finput" id="ed-area" value="${esc(item.area||"")}" placeholder="Area (e.g. HVAC, Dogs)">
-    <input class="finput" id="ed-cost" value="${esc(item.cost||"")}" placeholder="Estimated cost">
-    <input class="finput" id="ed-note" value="${esc(item.note||"")}" placeholder="Note (optional)">
-    <div class="flabel">Effort</div>
-    <div class="pills" id="ed-effort">${EFFORTS.map(e=>`<button class="pill" data-ef="${e}">${e}</button>`).join("")}</div>
-    <div class="flabel">Priority</div>
-    <div class="pills" id="ed-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}">${PC[p].label}</button>`).join("")}</div>`;
+    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}"><input class="finput" id="ed-area" value="${esc(item.area||"")}" placeholder="Area"><input class="finput" id="ed-cost" value="${esc(item.cost||"")}" placeholder="Cost"><input class="finput" id="ed-note" value="${esc(item.note||"")}" placeholder="Note">
+    <div class="flabel">Effort</div><div class="pills" id="ed-effort">${EFFORTS.map(e=>`<button class="pill" data-ef="${e}">${e}</button>`).join("")}</div>
+    <div class="flabel">Priority</div><div class="pills" id="ed-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}">${PC[p].label}</button>`).join("")}</div>`;
   } else if(type==="chore"){
-    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}">
-    <input class="finput" id="ed-min" type="number" value="${item.minutes}" placeholder="Minutes">
-    <div class="flabel">Frequency</div>
-    <div class="pills" id="ed-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
-    <div class="flabel">Area</div>
-    <div class="pills" id="ed-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>`;
+    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}"><input class="finput" id="ed-min" type="number" value="${item.minutes}" placeholder="Minutes">
+    <div class="flabel">Frequency</div><div class="pills" id="ed-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
+    <div class="flabel">Scheduled Days</div><div class="pills" id="ed-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
+    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap multiple days. Leave empty for flexible scheduling.</div>
+    <div class="flabel">Area</div><div class="pills" id="ed-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>`;
   } else {
-    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}">
-    <input class="finput" id="ed-cost" value="${esc(item.cost||"")}" placeholder="Cost">
-    <div class="flabel">Category</div>
-    <div class="pills" id="ed-cat">${CATS.map(c=>`<button class="pill" data-ca="${c.key}">${c.icon} ${c.label}</button>`).join("")}</div>
-    <div class="flabel">Priority</div>
-    <div class="pills" id="ed-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}" style="color:${PC[p].color}">${PC[p].label}</button>`).join("")}</div>`;
+    h+=`<input class="finput" id="ed-task" value="${esc(item.task)}"><input class="finput" id="ed-cost" value="${esc(item.cost||"")}" placeholder="Cost">
+    <div class="flabel">Category</div><div class="pills" id="ed-cat">${CATS.map(c=>`<button class="pill" data-ca="${c.key}">${c.icon} ${c.label}</button>`).join("")}</div>
+    <div class="flabel">Priority</div><div class="pills" id="ed-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}" style="color:${PC[p].color}">${PC[p].label}</button>`).join("")}</div>`;
   }
-
-  h+=`<div style="display:flex;gap:8px;margin-top:12px">
-    <button class="btnp" style="flex:1" id="ed-save">Save</button>
-    <button class="btndanger" id="ed-delete">Delete</button>
-    <button class="btns" id="ed-cancel">Cancel</button>
-  </div></div></div>`;
-
+  h+=`<div style="display:flex;gap:8px;margin-top:12px"><button class="btnp" style="flex:1" id="ed-save">Save</button><button class="btndanger" id="ed-delete">Delete</button><button class="btns" id="ed-cancel">Cancel</button></div></div></div>`;
   document.getElementById("modal-root").innerHTML=h;
 
-  // Set active pills
-  if(type==="maint"){
-    pillSelect("ed-effort","ef",item.effort||"DIY");
-    pillSelect("ed-pri","pr",item.priority||"medium");
-  } else if(type==="chore"){
-    pillSelect("ed-freq","fr",item.frequency);
-    pillSelect("ed-zone","zo",item.zone);
-  } else {
-    pillSelect("ed-cat","ca",item.category||"other");
-    pillSelect("ed-pri","pr",item.priority||"medium");
-  }
+  if(type==="maint"){pillSelect("ed-effort","ef",item.effort||"DIY");pillSelect("ed-pri","pr",item.priority||"medium")}
+  else if(type==="chore"){
+    pillSelect("ed-freq","fr",item.frequency);pillSelect("ed-zone","zo",item.zone);
+    // Multi-select days
+    document.querySelectorAll("#ed-days .pill").forEach(b=>{
+      const d=parseInt(b.dataset.dy);
+      if(item.days&&item.days.includes(d))b.classList.add("on");
+      b.addEventListener("click",()=>b.classList.toggle("on"));
+    });
+  } else {pillSelect("ed-cat","ca",item.category||"other");pillSelect("ed-pri","pr",item.priority||"medium")}
 
   document.getElementById("ed-cancel").addEventListener("click",closeModal);
   document.getElementById("modal-overlay").addEventListener("click",e=>{if(e.target.id==="modal-overlay")closeModal()});
-
   document.getElementById("ed-delete").addEventListener("click",()=>{
-    if(type==="maint"){
-      maintTasks[season]=maintTasks[season].filter(x=>x.id!==item.id);saveMaint();
-    } else if(type==="chore"){
-      chores=chores.filter(x=>x.id!==item.id);saveChores();
-    } else {
-      projects=projects.filter(x=>x.id!==item.id);saveProjects();
-    }
+    if(type==="maint"){maintTasks[season]=maintTasks[season].filter(x=>x.id!==item.id);saveMaint()}
+    else if(type==="chore"){chores=chores.filter(x=>x.id!==item.id);saveChores()}
+    else{projects=projects.filter(x=>x.id!==item.id);saveProjects()}
     closeModal();
   });
-
   document.getElementById("ed-save").addEventListener("click",()=>{
-    const task=document.getElementById("ed-task")?.value.trim();
-    if(!task)return;
-    if(type==="maint"){
-      const t=maintTasks[season].find(x=>x.id===item.id);
-      if(t){t.task=task;t.area=document.getElementById("ed-area").value.trim();t.cost=document.getElementById("ed-cost").value.trim();t.note=document.getElementById("ed-note").value.trim();t.effort=getSelected("ed-effort","ef","DIY");t.priority=getSelected("ed-pri","pr","medium")}
-      saveMaint();
-    } else if(type==="chore"){
+    const task=document.getElementById("ed-task")?.value.trim();if(!task)return;
+    if(type==="maint"){const t=maintTasks[season].find(x=>x.id===item.id);if(t){t.task=task;t.area=document.getElementById("ed-area").value.trim();t.cost=document.getElementById("ed-cost").value.trim();t.note=document.getElementById("ed-note").value.trim();t.effort=getSelected("ed-effort","ef","DIY");t.priority=getSelected("ed-pri","pr","medium")}saveMaint()}
+    else if(type==="chore"){
       const c=chores.find(x=>x.id===item.id);
-      if(c){c.task=task;c.minutes=parseInt(document.getElementById("ed-min").value)||15;c.frequency=getSelected("ed-freq","fr","1x/month");c.zone=getSelected("ed-zone","zo","Whole House")}
+      if(c){c.task=task;c.minutes=parseInt(document.getElementById("ed-min").value)||15;c.frequency=getSelected("ed-freq","fr","Weekly");c.zone=getSelected("ed-zone","zo","Whole House");
+        c.days=[];document.querySelectorAll("#ed-days .pill.on").forEach(b=>c.days.push(parseInt(b.dataset.dy)))}
       saveChores();
-    } else {
-      const p=projects.find(x=>x.id===item.id);
-      if(p){p.task=task;p.cost=document.getElementById("ed-cost").value.trim();p.category=getSelected("ed-cat","ca","other");p.priority=getSelected("ed-pri","pr","medium")}
-      saveProjects();
-    }
+    } else {const p=projects.find(x=>x.id===item.id);if(p){p.task=task;p.cost=document.getElementById("ed-cost").value.trim();p.category=getSelected("ed-cat","ca","other");p.priority=getSelected("ed-pri","pr","medium")}saveProjects()}
     closeModal();
   });
 }
 
 // ══════════════════════════════════════
-// MAINTENANCE TAB
+// MAINTENANCE TAB (unchanged)
 // ══════════════════════════════════════
 function renderMaint(){
-  const s=SEASONS[curSeason],tasks=maintTasks[curSeason]||[];
-  const dc=tasks.filter(t=>maintDone[t.id]).length;
-  let h=`<div class="spills">`;
-  for(const[k,v]of Object.entries(SEASONS)){h+=`<button class="sp ${k===curSeason?"on":""}" data-s="${k}" style="${k===curSeason?`border-color:${v.color};background:${v.bg};color:${v.color}`:""}">${v.icon} ${v.label}</button>`}
+  const s=SEASONS[curSeason],tasks=maintTasks[curSeason]||[];const dc=tasks.filter(t=>maintDone[t.id]).length;
+  let h=`<div class="spills">`;for(const[k,v]of Object.entries(SEASONS)){h+=`<button class="sp ${k===curSeason?"on":""}" data-s="${k}" style="${k===curSeason?`border-color:${v.color};background:${v.bg};color:${v.color}`:""}">${v.icon} ${v.label}</button>`}h+=`</div>`;
+  if(tasks.length>0){h+=`<div class="pbox" style="background:${s.bg}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-weight:600;color:${s.color};font-size:16px">${s.icon} ${s.label} Maintenance</span><span style="font-size:15px;color:#888">${dc}/${tasks.length} done</span></div><div class="pbg"><div class="pfill" style="width:${tasks.length?(dc/tasks.length)*100:0}%;background:${s.color}"></div></div></div>`}
+  h+=`<div style="margin-bottom:14px">`;
+  if(!showForm.maint){h+=`<button class="addbtn" id="show-add-maint">+ Add seasonal item</button>`}
+  else{h+=`<div class="fbox"><input class="finput" id="nm-task" placeholder="What's the task?"><input class="finput" id="nm-area" placeholder="Area"><input class="finput" id="nm-cost" placeholder="Cost"><input class="finput" id="nm-note" placeholder="Note"><div class="flabel">Effort</div><div class="pills" id="nm-effort">${EFFORTS.map(e=>`<button class="pill" data-ef="${e}">${e}</button>`).join("")}</div><div class="flabel">Priority</div><div class="pills" id="nm-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}">${PC[p].label}</button>`).join("")}</div><div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-maint">Add</button><button class="btns" id="cancel-add-maint">Cancel</button></div></div>`}
   h+=`</div>`;
-  
-  if(tasks.length>0){
-    h+=`<div class="pbox" style="background:${s.bg}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-weight:600;color:${s.color};font-size:16px">${s.icon} ${s.label} Maintenance</span><span style="font-size:15px;color:#888">${dc}/${tasks.length} done</span></div><div class="pbg"><div class="pfill" style="width:${tasks.length?(dc/tasks.length)*100:0}%;background:${s.color}"></div></div></div>`;
-  }
-
-  // Add button
-  h+=`<div style="margin-bottom:12px">`;
-  if(!showForm.maint){
-    h+=`<button class="addbtn" id="show-add-maint">+ Add seasonal item</button>`;
-  } else {
-    h+=`<div class="fbox">
-      <input class="finput" id="nm-task" placeholder="What's the task?">
-      <input class="finput" id="nm-area" placeholder="Area (e.g. HVAC, Dogs, Exterior)">
-      <input class="finput" id="nm-cost" placeholder="Estimated cost (e.g. $50–100)">
-      <input class="finput" id="nm-note" placeholder="Note (optional)">
-      <div class="flabel">Effort</div>
-      <div class="pills" id="nm-effort">${EFFORTS.map(e=>`<button class="pill" data-ef="${e}">${e}</button>`).join("")}</div>
-      <div class="flabel">Priority</div>
-      <div class="pills" id="nm-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}">${PC[p].label}</button>`).join("")}</div>
-      <div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-maint">Add</button><button class="btns" id="cancel-add-maint">Cancel</button></div>
-    </div>`;
-  }
-  h+=`</div>`;
-
-  tasks.forEach(t=>{
-    const dn=!!maintDone[t.id];
-    h+=`<div class="card ${dn?"dn":""}"><div class="crow">
-      <div class="chk ${dn?"on":""}" data-mid="${t.id}" style="${dn?`background:${s.color}`:""}">${dn?"✓":""}</div>
-      <div style="flex:1">
-        <div class="ctitle ${dn?"struck":""}">${esc(t.task)}</div>
-        <div class="tags">
-          ${t.area?`<span class="tg">${esc(t.area)}</span>`:""}
-          ${t.effort?`<span class="tg">${esc(t.effort)}</span>`:""}
-          ${t.cost?`<span class="tg">${esc(t.cost)}</span>`:""}
-          ${t.priority==="high"?'<span class="tg pri">Priority</span>':""}
-        </div>
-        ${t.note?`<div class="cnote">💡 ${esc(t.note)}</div>`:""}
-        ${dn&&maintDone[t.id]?`<div class="cdate">Done ${fmtDate(maintDone[t.id])}</div>`:""}
-        <div class="actions"><button class="act" data-medit="${t.id}">edit</button></div>
-      </div>
-    </div></div>`;
-  });
-
-  if(tasks.length===0) h+=`<div class="empty">No items for ${s.label} — tap + to add one</div>`;
-
+  tasks.forEach(t=>{const dn=!!maintDone[t.id];h+=`<div class="card ${dn?"dn":""}"><div class="crow"><div class="chk ${dn?"on":""}" data-mid="${t.id}" style="${dn?`background:${s.color}`:""}">${dn?"✓":""}</div><div style="flex:1"><div class="ctitle ${dn?"struck":""}">${esc(t.task)}</div><div class="tags">${t.area?`<span class="tg">${esc(t.area)}</span>`:""}${t.effort?`<span class="tg">${esc(t.effort)}</span>`:""}${t.cost?`<span class="tg">${esc(t.cost)}</span>`:""}${t.priority==="high"?'<span class="tg pri">Priority</span>':""}</div>${t.note?`<div class="cnote">💡 ${esc(t.note)}</div>`:""}${dn&&maintDone[t.id]?`<div class="cdate">Done ${fmtDate(maintDone[t.id])}</div>`:""}<div class="actions"><button class="act" data-medit="${t.id}">edit</button></div></div></div></div>`});
+  if(!tasks.length)h+=`<div class="empty">No items for ${s.label} — tap + to add one</div>`;
   document.getElementById("tab-maintenance").innerHTML=h;
-
-  // Events
   document.querySelectorAll(".sp").forEach(b=>b.addEventListener("click",()=>{curSeason=b.dataset.s;showForm.maint=false;renderMaint()}));
-  document.querySelectorAll("[data-mid]").forEach(c=>c.addEventListener("click",()=>{
-    const id=c.dataset.mid;if(maintDone[id])delete maintDone[id];else maintDone[id]=new Date().toISOString();
-    saveMaintDone();renderMaint();
-  }));
-  document.querySelectorAll("[data-medit]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation();
-    const item=tasks.find(t=>t.id===b.dataset.medit);if(item)showEditModal("maint",item,curSeason);
-  }));
-
+  document.querySelectorAll("[data-mid]").forEach(c=>c.addEventListener("click",()=>{const id=c.dataset.mid;if(maintDone[id])delete maintDone[id];else maintDone[id]=new Date().toISOString();saveMaintDone();renderMaint()}));
+  document.querySelectorAll("[data-medit]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const item=tasks.find(t=>t.id===b.dataset.medit);if(item)showEditModal("maint",item,curSeason)}));
   document.getElementById("show-add-maint")?.addEventListener("click",()=>{showForm.maint=true;renderMaint()});
   document.getElementById("cancel-add-maint")?.addEventListener("click",()=>{showForm.maint=false;renderMaint()});
-
-  if(showForm.maint){
-    pillSelect("nm-effort","ef","DIY");
-    pillSelect("nm-pri","pr","medium");
-  }
-
-  document.getElementById("do-add-maint")?.addEventListener("click",()=>{
-    const task=document.getElementById("nm-task")?.value.trim();if(!task)return;
-    maintTasks[curSeason].push({
-      id:"m-"+uid(),task,
-      area:document.getElementById("nm-area").value.trim(),
-      cost:document.getElementById("nm-cost").value.trim(),
-      note:document.getElementById("nm-note").value.trim(),
-      effort:getSelected("nm-effort","ef","DIY"),
-      priority:getSelected("nm-pri","pr","medium"),
-    });
-    saveMaint();showForm.maint=false;renderMaint();
-  });
+  if(showForm.maint){pillSelect("nm-effort","ef","DIY");pillSelect("nm-pri","pr","medium")}
+  document.getElementById("do-add-maint")?.addEventListener("click",()=>{const task=document.getElementById("nm-task")?.value.trim();if(!task)return;maintTasks[curSeason].push({id:"m-"+uid(),task,area:document.getElementById("nm-area").value.trim(),cost:document.getElementById("nm-cost").value.trim(),note:document.getElementById("nm-note").value.trim(),effort:getSelected("nm-effort","ef","DIY"),priority:getSelected("nm-pri","pr","medium")});saveMaint();showForm.maint=false;renderMaint()});
 }
 
 // ══════════════════════════════════════
 // CHORES TAB
 // ══════════════════════════════════════
 function renderChores(){
-  // Calculate status for all chores
-  const status=chores.map(c=>{
-    const last=choreLog[c.id];let overdue=!last;let daysSince=999;
-    if(last){daysSince=Math.floor((Date.now()-new Date(last).getTime())/864e5);overdue=daysSince>=(FD[c.frequency]||30)}
-    // Urgency score: how far past due (as ratio of cycle). Higher = more overdue
-    const cycleDays=FD[c.frequency]||30;
-    const urgency=last?((daysSince-cycleDays)/cycleDays):(1);
-    return{...c,lastDone:last,overdue,upToDate:last&&!overdue,daysSince,urgency};
+  const today=new Date().getDay();
+  const allDue=chores.filter(c=>isOverdue(c));
+
+  // For daily chores on day bar dots, check isDueForDay
+  const dayHasDue=DAYS.map((_,i)=>{
+    return chores.some(c=>isScheduledForDay(c,i)&&(c.frequency==="Daily"?(i===today&&isDueForDay(c,i)):isOverdue(c)));
   });
 
-  const allDue=status.filter(c=>c.overdue),allDone=status.filter(c=>c.upToDate);
+  let h="";
 
-  // View filter pills
-  const views=[
-    {key:"due",label:`⚡ Due Now (${allDue.length})`},
-    {key:"zone",label:"🏠 By Area"},
-    {key:"all",label:"📋 All"},
-  ];
-  const freqFilters=FREQS.map(f=>{
-    const count=status.filter(c=>c.frequency===f).length;
-    return{key:f,label:`${f} (${count})`};
-  });
-
-  let h=`<div class="banner" style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9)">
-    <div><div class="blabel" style="color:#2e7d32">🧹 ${allDue.length} chores due</div><div class="bsub">~${allDue.reduce((s,c)=>s+c.minutes,0)} min total</div></div>
-    <button class="rbtn" id="reset-ch">Reset Log</button>
-  </div>`;
-
-  // View toggle pills
-  h+=`<div class="fpills" style="margin-bottom:8px">${views.map(v=>`<button class="fpill ${choreView===v.key?"on":""}" data-cv="${v.key}">${v.label}</button>`).join("")}</div>`;
-  // Frequency filter pills
-  h+=`<div class="fpills">${freqFilters.map(f=>`<button class="fpill ${choreView===f.key?"on":""}" data-cv="${f.key}">${f.label}</button>`).join("")}</div>`;
-
-  // Add button
-  h+=`<div style="margin-bottom:14px">`;
-  if(!showForm.chore){
-    h+=`<button class="addbtn" id="show-add-chore">+ Add a chore</button>`;
-  } else {
-    h+=`<div class="fbox">
-      <input class="finput" id="nc-task" placeholder="What's the chore?">
-      <input class="finput" id="nc-min" type="number" placeholder="Estimated minutes" min="1">
-      <div class="flabel">Frequency</div>
-      <div class="pills" id="nc-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
-      <div class="flabel">Area</div>
-      <div class="pills" id="nc-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>
-      <div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-chore">Add</button><button class="btns" id="cancel-add-chore">Cancel</button></div>
-    </div>`;
+  // Add button FIRST (above view toggles)
+  h+=`<div style="margin-top:16px;margin-bottom:12px">`;
+  if(!showForm.chore)h+=`<button class="addbtn" id="show-add-chore">+ Add a chore</button>`;
+  else{
+    h+=`<div class="fbox"><input class="finput" id="nc-task" placeholder="What's the chore?"><input class="finput" id="nc-min" type="number" placeholder="Estimated minutes" min="1">
+    <div class="flabel">Frequency</div><div class="pills" id="nc-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
+    <div class="flabel">Scheduled Days</div><div class="pills" id="nc-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
+    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap days this chore should be done. Leave empty for flexible.</div>
+    <div class="flabel">Area</div><div class="pills" id="nc-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>
+    <div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-chore">Add</button><button class="btns" id="cancel-add-chore">Cancel</button></div></div>`;
   }
   h+=`</div>`;
 
-  // ─── DUE NOW VIEW ───
-  if(choreView==="due"){
-    const sorted=[...allDue].sort((a,b)=>b.urgency-a.urgency);
-    if(sorted.length===0){
-      h+=`<div class="empty" style="padding:40px 0">🎉 All caught up! Nothing due right now.</div>`;
-    } else {
-      sorted.forEach(c=>{
-        const zc=ZC[c.zone]||{icon:"📌",label:c.zone};
-        h+=choreCard(c,false,zc);
+  // View toggles
+  const views=[{key:"week",label:"📅 This Week"},{key:"due",label:`⚡ Due (${allDue.length})`},{key:"all",label:"📋 All"}];
+  h+=`<div class="vtoggle">${views.map(v=>`<button class="vpill ${choreView===v.key?"on":""}" data-cv="${v.key}">${v.label}</button>`).join("")}</div>`;
+
+  // ─── WEEK VIEW ───
+  if(choreView==="week"){
+    h+=`<div class="week-bar">`;
+    DAYS.forEach((d,i)=>{
+      const isT=i===today,isSel=i===selectedDay;
+      let cls="day-btn";if(isT)cls+=" today";if(isSel)cls+=" sel";
+      if(dayHasDue[i]&&!isSel)cls+=" has-due";
+      h+=`<button class="${cls}" data-day="${i}"><strong>${d}</strong></button>`;
+    });
+    h+=`</div>`;
+
+    const scheduled=chores.filter(c=>isScheduledForDay(c,selectedDay));
+    const isViewingToday=selectedDay===today;
+
+    if(scheduled.length>0){
+      // Separate into: overdue from other days, due today, completed today
+      let overduePast=[], dueNow=[], completedToday=[];
+
+      scheduled.forEach(c=>{
+        if(isViewingToday){
+          if(c.frequency==="Daily"){
+            if(isDoneToday(c)||isSkippedToday(c)) completedToday.push(c);
+            else dueNow.push(c);
+          } else {
+            if(isDoneToday(c)||isSkippedToday(c)) completedToday.push(c);
+            else if(isOverdue(c)) overduePast.push(c);
+            else dueNow.push(c);
+          }
+        } else {
+          // Viewing another day - just show scheduled, can't complete
+          if(c.frequency==="Daily") dueNow.push(c);
+          else if(isOverdue(c)) overduePast.push(c);
+          else dueNow.push(c);
+        }
       });
+
+      // Sort overdue by urgency
+      overduePast.sort((a,b)=>getUrgency(b)-getUrgency(a));
+
+      const totalOverdue=overduePast.length;
+      const totalDue=dueNow.length;
+
+      // Overdue section
+      if(overduePast.length>0){
+        h+=`<div class="zh"><div class="zl" style="color:#e65100">⚠️ Overdue</div><span class="zd">${totalOverdue}</span></div>`;
+        h+=bulkActions("overdue",overduePast);
+        overduePast.forEach(c=>{h+=choreCard(c,false,true)});
+      }
+
+      // Today's section
+      if(dueNow.length>0){
+        h+=`<div class="zh" style="${overduePast.length>0?"margin-top:18px":""}"><div class="zl">${DAYS[selectedDay]}${isViewingToday?" — Today":""}</div><span class="zd">${totalDue} to do</span></div>`;
+        if(isViewingToday&&dueNow.length>1){h+=bulkActions("today",dueNow)}
+        dueNow.forEach(c=>{h+=choreCard(c,false,true)});
+      }
+
+      if(overduePast.length===0&&dueNow.length===0&&!isViewingToday){
+        h+=`<div class="empty" style="padding:24px 0">No pending chores for ${DAYS[selectedDay]}</div>`;
+      }
+
+      // Completed today section
+      if(completedToday.length>0){
+        h+=`<div class="zh" style="margin-top:18px"><div class="zl" style="color:#4a7c59">✓ Done today</div></div>`;
+        completedToday.forEach(c=>{h+=choreCard(c,true,false)});
+      }
+    } else {
+      h+=`<div class="empty" style="padding:24px 0">No scheduled chores for ${DAYS[selectedDay]}</div>`;
     }
-    if(allDone.length>0) h+=`<div class="upd">✓ ${allDone.length} of ${status.length} up to date</div>`;
+
+    // Unscheduled overdue (only on today view)
+    if(isViewingToday){
+      const unscheduled=chores.filter(c=>(!c.days||c.days.length===0)&&isOverdue(c));
+      if(unscheduled.length>0){
+        h+=`<div class="zh" style="margin-top:18px"><div class="zl" style="color:#e65100">📌 Unscheduled & Overdue</div><span class="zd">${unscheduled.length}</span></div>`;
+        h+=bulkActions("unsched",unscheduled);
+        unscheduled.forEach(c=>{h+=choreCard(c,false,true)});
+      }
+    }
   }
 
-  // ─── ZONE VIEW ───
-  else if(choreView==="zone"){
-    const grouped={};
-    status.forEach(c=>{if(!grouped[c.zone])grouped[c.zone]=[];grouped[c.zone].push(c)});
-    Object.values(grouped).forEach(a=>a.sort((x,y)=>(FO[x.frequency]||99)-(FO[y.frequency]||99)));
-    ZO.forEach(zone=>{
-      if(!grouped[zone])return;
-      const zc=ZC[zone],arr=grouped[zone],due=arr.filter(c=>c.overdue).length;
-      h+=`<div style="margin-bottom:18px"><div class="zh"><div class="zl">${zc.icon} ${zc.label}</div>${due>0?`<span class="zd">${due} due</span>`:""}</div>`;
-      arr.forEach(c=>{ h+=choreCard(c,c.upToDate); });
-      h+=`</div>`;
-    });
-    if(allDone.length>0) h+=`<div class="upd">✓ ${allDone.length} of ${status.length} up to date</div>`;
+  // ─── DUE VIEW ───
+  else if(choreView==="due"){
+    const sorted=[...allDue].sort((a,b)=>getUrgency(b)-getUrgency(a));
+    if(!sorted.length)h+=`<div class="empty" style="padding:40px 0">🎉 All caught up!</div>`;
+    else{
+      h+=bulkActions("alldue",sorted);
+      sorted.forEach(c=>{h+=choreCard(c,false,true)});
+    }
   }
 
   // ─── ALL VIEW ───
-  else if(choreView==="all"){
-    const sorted=[...status].sort((a,b)=>(FO[a.frequency]||99)-(FO[b.frequency]||99));
-    sorted.forEach(c=>{ h+=choreCard(c,c.upToDate); });
-  }
-
-  // ─── FREQUENCY FILTER ───
-  else {
-    const filtered=status.filter(c=>c.frequency===choreView);
-    const sorted=[...filtered].sort((a,b)=>b.urgency-a.urgency);
-    if(sorted.length===0){
-      h+=`<div class="empty">No ${choreView} chores</div>`;
-    } else {
-      const due=sorted.filter(c=>c.overdue);
-      const done=sorted.filter(c=>c.upToDate);
-      if(due.length>0){
-        h+=`<div class="zh"><div class="zl">⚡ Due</div><span class="zd">${due.length}</span></div>`;
-        due.forEach(c=>{ h+=choreCard(c,false); });
-      }
-      if(done.length>0){
-        h+=`<div class="zh" style="margin-top:16px"><div class="zl" style="color:#4a7c59">✓ Up to date</div></div>`;
-        done.forEach(c=>{ h+=choreCard(c,true); });
-      }
+  else{
+    const pending=[...chores].filter(c=>c.frequency==="Daily"?!isDoneToday(c):isOverdue(c)).sort((a,b)=>(FO[a.frequency]||99)-(FO[b.frequency]||99));
+    const done=[...chores].filter(c=>c.frequency==="Daily"?isDoneToday(c):!isOverdue(c)).sort((a,b)=>(FO[a.frequency]||99)-(FO[b.frequency]||99));
+    if(pending.length>0){
+      h+=`<div class="zh"><div class="zl">📋 Pending</div><span class="zd">${pending.length}</span></div>`;
+      pending.forEach(c=>{h+=choreCard(c,false,false)});
+    }
+    if(done.length>0){
+      h+=`<div class="zh" style="margin-top:16px"><div class="zl" style="color:#4a7c59">✓ Up to date</div></div>`;
+      done.forEach(c=>{h+=choreCard(c,true,false)});
     }
   }
 
   document.getElementById("tab-chores").innerHTML=h;
 
   // ─── EVENTS ───
-  document.querySelectorAll("[data-cid]").forEach(b=>b.addEventListener("click",()=>{
-    choreLog[b.dataset.cid]=new Date().toISOString();saveChoreLog();renderChores();
-  }));
-  document.getElementById("reset-ch")?.addEventListener("click",()=>{choreLog={};saveChoreLog();renderChores()});
-  document.querySelectorAll("[data-cedit]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation();
-    const item=chores.find(c=>c.id===b.dataset.cedit);if(item)showEditModal("chore",item);
-  }));
   document.querySelectorAll("[data-cv]").forEach(b=>b.addEventListener("click",()=>{choreView=b.dataset.cv;renderChores()}));
+  document.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>{selectedDay=parseInt(b.dataset.day);renderChores()}));
+  document.querySelectorAll("[data-cid]").forEach(b=>b.addEventListener("click",()=>{
+    const id=b.dataset.cid;choreLog[id]=new Date().toISOString();choreCount[id]=(choreCount[id]||0)+1;saveChoreLogs();renderChores();
+  }));
+  document.querySelectorAll("[data-skip]").forEach(b=>b.addEventListener("click",()=>{
+    choreSkips[b.dataset.skip]=new Date().toISOString();saveChoreLogs();renderChores();
+  }));
+  document.querySelectorAll("[data-cedit]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation();const item=chores.find(c=>c.id===b.dataset.cedit);if(item)showEditModal("chore",item);
+  }));
+  // Bulk actions
+  document.querySelectorAll("[data-bulkcomplete]").forEach(b=>b.addEventListener("click",()=>{
+    const ids=JSON.parse(b.dataset.bulkcomplete);const now=new Date().toISOString();
+    ids.forEach(id=>{choreLog[id]=now;choreCount[id]=(choreCount[id]||0)+1});saveChoreLogs();renderChores();
+  }));
+  document.querySelectorAll("[data-bulkskip]").forEach(b=>b.addEventListener("click",()=>{
+    const ids=JSON.parse(b.dataset.bulkskip);const now=new Date().toISOString();
+    ids.forEach(id=>{choreSkips[id]=now});saveChoreLogs();renderChores();
+  }));
 
   document.getElementById("show-add-chore")?.addEventListener("click",()=>{showForm.chore=true;renderChores()});
   document.getElementById("cancel-add-chore")?.addEventListener("click",()=>{showForm.chore=false;renderChores()});
-  if(showForm.chore){pillSelect("nc-freq","fr","1x/month");pillSelect("nc-zone","zo","Whole House")}
-
+  if(showForm.chore){
+    pillSelect("nc-freq","fr","Weekly");pillSelect("nc-zone","zo","Whole House");
+    document.querySelectorAll("#nc-days .pill").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("on")));
+  }
   document.getElementById("do-add-chore")?.addEventListener("click",()=>{
     const task=document.getElementById("nc-task")?.value.trim();if(!task)return;
-    chores.push({id:"c-"+uid(),task,frequency:getSelected("nc-freq","fr","1x/month"),zone:getSelected("nc-zone","zo","Whole House"),minutes:parseInt(document.getElementById("nc-min")?.value)||15});
+    const days=[];document.querySelectorAll("#nc-days .pill.on").forEach(b=>days.push(parseInt(b.dataset.dy)));
+    chores.push({id:"c-"+uid(),task,frequency:getSelected("nc-freq","fr","Weekly"),zone:getSelected("nc-zone","zo","Whole House"),minutes:parseInt(document.getElementById("nc-min")?.value)||15,days});
     saveChores();showForm.chore=false;renderChores();
   });
 }
 
-// Shared chore card renderer
-function choreCard(c, done, zoneInfo){
-  const zc=zoneInfo||(ZC[c.zone]||{icon:"📌",label:c.zone});
-  return `<div class="cc ${done?"ccdn":""}">
+function bulkActions(group,items){
+  const ids=JSON.stringify(items.map(c=>c.id));
+  return `<div style="display:flex;gap:8px;margin-bottom:10px">
+    <button class="rbtn" style="font-size:13px" data-bulkcomplete='${ids}'>✓ Complete all</button>
+    <button class="rbtn" style="font-size:13px" data-bulkskip='${ids}'>→ Skip all</button>
+  </div>`;
+}
+
+function choreCard(c,done,showActions){
+  const zc=ZC[c.zone]||{icon:"📌",label:c.zone};
+  const count=choreCount[c.id]||0;
+  const over=!done&&(c.frequency==="Daily"?isDueForDay(c,new Date().getDay()):isOverdue(c));
+  const dayLabels=c.days&&c.days.length>0?c.days.map(d=>DAYS[d]).join(", "):"";
+  return `<div class="cc ${done?"ccdn":""}${over?" overdue-card":""}">
+    ${over?`<button class="skip-btn" data-skip="${c.id}" title="Skip">→</button>`:""}
     <button class="cchk ${done?"on":""}" data-cid="${c.id}">${done?"✓":""}</button>
     <div style="flex:1;min-width:0">
       <div class="ctit" style="${done?"text-decoration:line-through;color:#999":""}">${esc(c.task)}</div>
       <div class="cmeta">
         <span style="color:#888">${zc.icon} ${zc.label}</span>
+        ${dayLabels?`<span style="color:#666">${dayLabels}</span>`:""}
         <span style="color:#999">~${c.minutes}min</span>
-        ${c.lastDone&&!done?`<span style="color:#c62828">Last: ${daysAgo(c.lastDone)}</span>`:""}
-        ${!c.lastDone&&!done?`<span style="color:#c62828">Never done</span>`:""}
-        ${done&&c.lastDone?`<span style="color:#4a7c59">Done ${daysAgo(c.lastDone)}</span>`:""}
+        ${count>0?`<span class="count-badge">✓ ${count}</span>`:""}
       </div>
-      <div class="actions"><button class="act" data-cedit="${c.id}">edit</button></div>
+      <div class="cmeta" style="margin-top:2px">
+        ${choreLog[c.id]&&!done?`<span style="color:#c62828">Last: ${daysAgo(choreLog[c.id])}</span>`:""}
+        ${!choreLog[c.id]&&!done?`<span style="color:#c62828">Never done</span>`:""}
+        ${done&&choreLog[c.id]?`<span style="color:#4a7c59">Done ${daysAgo(choreLog[c.id])}</span>`:""}
+      </div>
+      ${showActions?`<div class="actions"><button class="act" data-cedit="${c.id}">edit</button></div>`:""}
     </div>
     <div class="fbadge">${c.frequency}</div>
   </div>`;
 }
 
 // ══════════════════════════════════════
-// PROJECTS TAB
+// PROJECTS TAB (unchanged)
 // ══════════════════════════════════════
 function renderProjects(){
-  const filtered=projects.filter(p=>{
-    if(projFilter==="all")return!p.done;if(projFilter==="done")return p.done;
-    if(projFilter==="high")return!p.done&&p.priority==="high";return!p.done&&p.category===projFilter;
-  });
+  const filtered=projects.filter(p=>{if(projFilter==="all")return!p.done;if(projFilter==="done")return p.done;if(projFilter==="high")return!p.done&&p.priority==="high";return!p.done&&p.category===projFilter});
   const hc=projects.filter(p=>!p.done&&p.priority==="high").length;
-
   let h=`<div style="margin:16px 0 12px">`;
-  if(!showForm.proj){
-    h+=`<button class="addbtn" id="show-add-proj">+ Add a project</button>`;
-  } else {
-    h+=`<div class="fbox">
-      <input class="finput" id="np-task" placeholder="What needs to be done?">
-      <input class="finput" id="np-cost" placeholder="Estimated cost (optional)">
-      <div class="flabel">Category</div>
-      <div class="pills" id="np-cat">${CATS.map(c=>`<button class="pill" data-ca="${c.key}">${c.icon} ${c.label}</button>`).join("")}</div>
-      <div class="flabel">Priority</div>
-      <div class="pills" id="np-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}" style="color:${PC[p].color}">${PC[p].label}</button>`).join("")}</div>
-      <div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-proj">Add</button><button class="btns" id="cancel-add-proj">Cancel</button></div>
-    </div>`;
-  }
+  if(!showForm.proj)h+=`<button class="addbtn" id="show-add-proj">+ Add a project</button>`;
+  else{h+=`<div class="fbox"><input class="finput" id="np-task" placeholder="What needs to be done?"><input class="finput" id="np-cost" placeholder="Cost (optional)"><div class="flabel">Category</div><div class="pills" id="np-cat">${CATS.map(c=>`<button class="pill" data-ca="${c.key}">${c.icon} ${c.label}</button>`).join("")}</div><div class="flabel">Priority</div><div class="pills" id="np-pri">${PRIORITIES.map(p=>`<button class="pill" data-pr="${p}" style="color:${PC[p].color}">${PC[p].label}</button>`).join("")}</div><div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-proj">Add</button><button class="btns" id="cancel-add-proj">Cancel</button></div></div>`}
   h+=`</div>`;
-
   const filters=[{key:"all",label:"To Do"},{key:"high",label:"🔴 High"},{key:"repair",label:"🔨 Repair"},{key:"upgrade",label:"⬆️ Upgrade"},{key:"yard",label:"🌿 Yard"},{key:"done",label:"✓ Done"}];
   h+=`<div class="fpills">${filters.map(f=>`<button class="fpill ${projFilter===f.key?"on":""}" data-pf="${f.key}">${f.label}</button>`).join("")}</div>`;
   h+=`<div style="font-size:14px;color:#999;margin-bottom:10px">${filtered.length} ${projFilter==="done"?"completed":"project"}${filtered.length!==1?"s":""}${projFilter==="all"&&hc>0?` <span style="color:#e65100">· ${hc} high priority</span>`:""}</div>`;
   if(!filtered.length)h+=`<div class="empty">${projFilter==="done"?"Nothing completed yet":"No projects — tap + to add one"}</div>`;
-
-  filtered.forEach(p=>{
-    const cat=CATS.find(c=>c.key===p.category)||CATS[5],pc=PC[p.priority];
-    h+=`<div class="pcard ${p.done?"pdn":""}">
-      <button class="pchk ${p.done?"on":""}" data-ptog="${p.id}">${p.done?"✓":""}</button>
-      <div style="flex:1">
-        <div style="font-size:16px;font-weight:500;${p.done?"text-decoration:line-through;color:#999":""}">${esc(p.task)}</div>
-        <div style="display:flex;gap:8px;margin-top:7px;flex-wrap:wrap;align-items:center">
-          <span class="tg">${cat.icon} ${cat.label}</span>
-          <span style="font-size:13px;background:${pc.bg};padding:3px 10px;border-radius:5px;color:${pc.color};font-weight:600">${pc.label}</span>
-          ${p.cost?`<span style="font-size:13px;color:#888">${esc(p.cost)}</span>`:""}
-          <span style="font-size:13px;color:#bbb">Added ${fmtDate(p.added)}</span>
-        </div>
-        ${p.done&&p.doneDate?`<div style="font-size:13px;color:#aaa;margin-top:4px">Completed ${fmtDate(p.doneDate)}</div>`:""}
-        ${!p.done?`<div class="actions"><button class="act" data-pedit="${p.id}">edit</button></div>`:""}
-      </div>
-    </div>`;
-  });
-
+  filtered.forEach(p=>{const cat=CATS.find(c=>c.key===p.category)||CATS[5],pc=PC[p.priority];
+    h+=`<div class="pcard ${p.done?"pdn":""}"><button class="pchk ${p.done?"on":""}" data-ptog="${p.id}">${p.done?"✓":""}</button><div style="flex:1"><div style="font-size:16px;font-weight:500;${p.done?"text-decoration:line-through;color:#999":""}">${esc(p.task)}</div><div style="display:flex;gap:8px;margin-top:7px;flex-wrap:wrap;align-items:center"><span class="tg">${cat.icon} ${cat.label}</span><span style="font-size:13px;background:${pc.bg};padding:3px 10px;border-radius:5px;color:${pc.color};font-weight:600">${pc.label}</span>${p.cost?`<span style="font-size:13px;color:#888">${esc(p.cost)}</span>`:""}<span style="font-size:13px;color:#bbb">Added ${fmtDate(p.added)}</span></div>${p.done&&p.doneDate?`<div style="font-size:13px;color:#aaa;margin-top:4px">Completed ${fmtDate(p.doneDate)}</div>`:""}${!p.done?`<div class="actions"><button class="act" data-pedit="${p.id}">edit</button></div>`:""}</div></div>`});
   document.getElementById("tab-projects").innerHTML=h;
-
   document.getElementById("show-add-proj")?.addEventListener("click",()=>{showForm.proj=true;renderProjects()});
   document.getElementById("cancel-add-proj")?.addEventListener("click",()=>{showForm.proj=false;renderProjects()});
   if(showForm.proj){pillSelect("np-cat","ca","repair");pillSelect("np-pri","pr","medium")}
-
-  document.getElementById("do-add-proj")?.addEventListener("click",()=>{
-    const task=document.getElementById("np-task")?.value.trim();if(!task)return;
-    projects.unshift({id:"p-"+uid(),task,priority:getSelected("np-pri","pr","medium"),cost:document.getElementById("np-cost")?.value.trim()||"",category:getSelected("np-cat","ca","repair"),added:new Date().toISOString(),done:false,doneDate:null});
-    saveProjects();showForm.proj=false;renderProjects();
-  });
-
+  document.getElementById("do-add-proj")?.addEventListener("click",()=>{const task=document.getElementById("np-task")?.value.trim();if(!task)return;projects.unshift({id:"p-"+uid(),task,priority:getSelected("np-pri","pr","medium"),cost:document.getElementById("np-cost")?.value.trim()||"",category:getSelected("np-cat","ca","repair"),added:new Date().toISOString(),done:false,doneDate:null});saveProjects();showForm.proj=false;renderProjects()});
   document.querySelectorAll("[data-pf]").forEach(b=>b.addEventListener("click",()=>{projFilter=b.dataset.pf;renderProjects()}));
-  document.querySelectorAll("[data-ptog]").forEach(b=>b.addEventListener("click",()=>{
-    const p=projects.find(x=>x.id===b.dataset.ptog);if(p){p.done=!p.done;p.doneDate=p.done?new Date().toISOString():null}
-    saveProjects();renderProjects();
-  }));
-  document.querySelectorAll("[data-pedit]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation();
-    const item=projects.find(p=>p.id===b.dataset.pedit);if(item)showEditModal("project",item);
-  }));
+  document.querySelectorAll("[data-ptog]").forEach(b=>b.addEventListener("click",()=>{const p=projects.find(x=>x.id===b.dataset.ptog);if(p){p.done=!p.done;p.doneDate=p.done?new Date().toISOString():null}saveProjects();renderProjects()}));
+  document.querySelectorAll("[data-pedit]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const item=projects.find(p=>p.id===b.dataset.pedit);if(item)showEditModal("project",item)}));
 }
 
 render();
 </script>
+
 </body>
 </html>
