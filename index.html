@@ -249,31 +249,48 @@ function fmtDate(d){return new Date(d).toLocaleDateString("en-US",{month:"short"
 function daysAgo(d){const x=Math.floor((Date.now()-new Date(d).getTime())/864e5);if(x===0)return"Today";if(x===1)return"Yesterday";return x+"d ago"}
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+// Get start of current week (Sunday 00:00)
+function getWeekStart(){
+  const now=new Date();const d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  d.setDate(d.getDate()-d.getDay()); // back to Sunday
+  return d;
+}
+function isDoneThisWeek(c){
+  const last=choreLog[c.id];if(!last)return false;
+  return new Date(last)>=getWeekStart();
+}
+function isSkippedThisWeek(c){
+  const s=choreSkips[c.id];if(!s)return false;
+  return new Date(s)>=getWeekStart();
+}
 function isOverdue(c){
   const last=choreLog[c.id];const skipped=choreSkips[c.id];
   const latest=last&&skipped?(new Date(last)>new Date(skipped)?last:skipped):(last||skipped);
   if(!latest)return true;
+  // Weekly and daily chores: reset every Sunday
+  if(c.frequency==="Daily"||c.frequency==="Weekly"){
+    return!isDoneThisWeek(c)&&!isSkippedThisWeek(c);
+  }
   const ds=Math.floor((Date.now()-new Date(latest).getTime())/864e5);
   return ds>=(FD[c.frequency]||30);
 }
 function isDoneToday(c){
-  const last=choreLog[c.id];
-  if(!last)return false;
+  const last=choreLog[c.id];if(!last)return false;
   const d=new Date(last),t=new Date();
   return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
 }
 function isSkippedToday(c){
-  const s=choreSkips[c.id];
-  if(!s)return false;
+  const s=choreSkips[c.id];if(!s)return false;
   const d=new Date(s),t=new Date();
   return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
 }
 function isDueForDay(c,dayNum){
-  // For daily chores: due every day, only "done" if completed/skipped today
   if(c.frequency==="Daily"){
     if(dayNum===new Date().getDay()) return !(isDoneToday(c)||isSkippedToday(c));
-    return true; // other days always show as pending (can't pre-complete)
+    return true;
   }
+  // Weekly: done this week means done for all days this week
+  if(c.frequency==="Weekly") return !isDoneThisWeek(c)&&!isSkippedThisWeek(c);
   return isOverdue(c);
 }
 function getUrgency(c){
@@ -523,7 +540,18 @@ function renderChores(){
   document.querySelectorAll("[data-cv]").forEach(b=>b.addEventListener("click",()=>{choreView=b.dataset.cv;renderChores()}));
   document.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>{selectedDay=parseInt(b.dataset.day);renderChores()}));
   document.querySelectorAll("[data-cid]").forEach(b=>b.addEventListener("click",()=>{
-    const id=b.dataset.cid;choreLog[id]=new Date().toISOString();choreCount[id]=(choreCount[id]||0)+1;saveChoreLogs();renderChores();
+    const id=b.dataset.cid;
+    const c=chores.find(x=>x.id===id);
+    // Toggle: if already done (today for daily, this period for others), undo it
+    const alreadyDone=c&&((c.frequency==="Daily"&&isDoneToday(c))||(c.frequency==="Weekly"&&isDoneThisWeek(c))||(c.frequency!=="Daily"&&c.frequency!=="Weekly"&&choreLog[id]&&!isOverdue(c)));
+    if(alreadyDone){
+      delete choreLog[id];
+      choreCount[id]=Math.max(0,(choreCount[id]||0)-1);
+    } else {
+      choreLog[id]=new Date().toISOString();
+      choreCount[id]=(choreCount[id]||0)+1;
+    }
+    saveChoreLogs();renderChores();
   }));
   document.querySelectorAll("[data-skip]").forEach(b=>b.addEventListener("click",()=>{
     choreSkips[b.dataset.skip]=new Date().toISOString();saveChoreLogs();renderChores();
@@ -567,26 +595,24 @@ function choreCard(c,done,showActions){
   const zc=ZC[c.zone]||{icon:"📌",label:c.zone};
   const count=choreCount[c.id]||0;
   const over=!done&&(c.frequency==="Daily"?isDueForDay(c,new Date().getDay()):isOverdue(c));
-  const dayLabels=c.days&&c.days.length>0?c.days.map(d=>DAYS[d]).join(", "):"";
-  return `<div class="cc ${done?"ccdn":""}${over?" overdue-card":""}">
-    ${over?`<button class="skip-btn" data-skip="${c.id}" title="Skip">→</button>`:""}
-    <button class="cchk ${done?"on":""}" data-cid="${c.id}">${done?"✓":""}</button>
+  return `<div class="cc ${done?"ccdn":""}${over?" overdue-card":""}" style="padding:10px 12px">
+    ${over?`<button class="skip-btn" data-skip="${c.id}" title="Skip" style="width:34px;height:34px">→</button>`:""}
+    <button class="cchk ${done?"on":""}" data-cid="${c.id}" style="width:34px;height:34px;font-size:15px">${done?"✓":""}</button>
     <div style="flex:1;min-width:0">
-      <div class="ctit" style="${done?"text-decoration:line-through;color:#999":""}">${esc(c.task)}</div>
-      <div class="cmeta">
-        <span style="color:#888">${zc.icon} ${zc.label}</span>
-        ${dayLabels?`<span style="color:#666">${dayLabels}</span>`:""}
-        <span style="color:#999">~${c.minutes}min</span>
-        ${count>0?`<span class="count-badge">✓ ${count}</span>`:""}
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="ctit" style="flex:1;${done?"text-decoration:line-through;color:#999":""}">${esc(c.task)}</div>
+        ${showActions?`<button class="act" data-cedit="${c.id}" style="font-size:15px;text-decoration:none;padding:4px 6px;color:#ccc">✎</button>`:""}
       </div>
-      <div class="cmeta" style="margin-top:2px">
-        ${choreLog[c.id]&&!done?`<span style="color:#c62828">Last: ${daysAgo(choreLog[c.id])}</span>`:""}
-        ${!choreLog[c.id]&&!done?`<span style="color:#c62828">Never done</span>`:""}
-        ${done&&choreLog[c.id]?`<span style="color:#4a7c59">Done ${daysAgo(choreLog[c.id])}</span>`:""}
+      <div class="cmeta" style="margin-top:3px">
+        <span style="color:#888">${zc.icon}</span>
+        <span style="color:#999">~${c.minutes}m</span>
+        ${count>0?`<span class="count-badge">✓${count}</span>`:""}
+        ${choreLog[c.id]&&!done?`<span style="color:#c62828">${daysAgo(choreLog[c.id])}</span>`:""}
+        ${!choreLog[c.id]&&!done?`<span style="color:#c62828">New</span>`:""}
+        ${done&&choreLog[c.id]?`<span style="color:#4a7c59">${daysAgo(choreLog[c.id])}</span>`:""}
       </div>
-      ${showActions?`<div class="actions"><button class="act" data-cedit="${c.id}">edit</button></div>`:""}
     </div>
-    <div class="fbadge">${c.frequency}</div>
+    <div class="fbadge" style="padding:4px 10px;font-size:12px">${c.frequency}</div>
   </div>`;
 }
 
