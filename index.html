@@ -313,8 +313,8 @@ function showEditModal(type,item,season){
   } else if(type==="chore"){
     h+=`<input class="finput" id="ed-task" value="${esc(item.task)}"><input class="finput" id="ed-min" type="number" value="${item.minutes}" placeholder="Minutes">
     <div class="flabel">Frequency</div><div class="pills" id="ed-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
-    <div class="flabel">Scheduled Days</div><div class="pills" id="ed-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
-    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap multiple. Leave empty for flexible.</div>
+    <div id="ed-days-wrap"><div class="flabel">Scheduled Days</div><div class="pills" id="ed-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
+    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap multiple. Leave empty for flexible.</div></div>
     <div class="flabel">Area</div><div class="pills" id="ed-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>`;
   } else {
     h+=`<input class="finput" id="ed-task" value="${esc(item.task)}"><input class="finput" id="ed-cost" value="${esc(item.cost||"")}" placeholder="Cost">
@@ -324,14 +324,19 @@ function showEditModal(type,item,season){
   h+=`<div style="display:flex;gap:8px;margin-top:12px"><button class="btnp" style="flex:1" id="ed-save">Save</button><button class="btndanger" id="ed-delete">Delete</button><button class="btns" id="ed-cancel">Cancel</button></div></div></div>`;
   document.getElementById("modal-root").innerHTML=h;
   if(type==="maint"){pillSelect("ed-effort","ef",item.effort||"DIY");pillSelect("ed-pri","pr",item.priority||"medium")}
-  else if(type==="chore"){pillSelect("ed-freq","fr",item.frequency);pillSelect("ed-zone","zo",item.zone);document.querySelectorAll("#ed-days .pill").forEach(b=>{if(item.days&&item.days.includes(parseInt(b.dataset.dy)))b.classList.add("on");b.addEventListener("click",()=>b.classList.toggle("on"))})}
+  else if(type==="chore"){pillSelect("ed-freq","fr",item.frequency);pillSelect("ed-zone","zo",item.zone);
+    document.querySelectorAll("#ed-days .pill").forEach(b=>{if(item.days&&item.days.includes(parseInt(b.dataset.dy)))b.classList.add("on");b.addEventListener("click",()=>b.classList.toggle("on"))});
+    function updateEdDaysVis(){const f=getSelected("ed-freq","fr",item.frequency);const w=document.getElementById("ed-days-wrap");if(w)w.style.display=f==="Daily"?"none":""}
+    document.querySelectorAll("#ed-freq .pill").forEach(b=>b.addEventListener("click",()=>setTimeout(updateEdDaysVis,10)));
+    updateEdDaysVis();
+  }
   else{pillSelect("ed-cat","ca",item.category||"other");pillSelect("ed-pri","pr",item.priority||"medium")}
   document.getElementById("ed-cancel").addEventListener("click",closeModal);
   document.getElementById("modal-overlay").addEventListener("click",e=>{if(e.target.id==="modal-overlay")closeModal()});
   document.getElementById("ed-delete").addEventListener("click",()=>{if(type==="maint"){maintTasks[season]=maintTasks[season].filter(x=>x.id!==item.id);saveMaint()}else if(type==="chore"){chores=chores.filter(x=>x.id!==item.id);saveChores()}else{projects=projects.filter(x=>x.id!==item.id);saveProjects()}closeModal()});
   document.getElementById("ed-save").addEventListener("click",()=>{const task=document.getElementById("ed-task")?.value.trim();if(!task)return;
     if(type==="maint"){const t=maintTasks[season].find(x=>x.id===item.id);if(t){t.task=task;t.area=document.getElementById("ed-area").value.trim();t.cost=document.getElementById("ed-cost").value.trim();t.note=document.getElementById("ed-note").value.trim();t.effort=getSelected("ed-effort","ef","DIY");t.priority=getSelected("ed-pri","pr","medium")}saveMaint()}
-    else if(type==="chore"){const c=chores.find(x=>x.id===item.id);if(c){c.task=task;c.minutes=parseInt(document.getElementById("ed-min").value)||15;c.frequency=getSelected("ed-freq","fr","Weekly");c.zone=getSelected("ed-zone","zo","Whole House");c.days=[];document.querySelectorAll("#ed-days .pill.on").forEach(b=>c.days.push(parseInt(b.dataset.dy)))}saveChores()}
+    else if(type==="chore"){const c=chores.find(x=>x.id===item.id);if(c){c.task=task;c.minutes=parseInt(document.getElementById("ed-min").value)||15;c.frequency=getSelected("ed-freq","fr","Weekly");c.zone=getSelected("ed-zone","zo","Whole House");if(c.frequency==="Daily"){c.days=[0,1,2,3,4,5,6]}else{c.days=[];document.querySelectorAll("#ed-days .pill.on").forEach(b=>c.days.push(parseInt(b.dataset.dy)))}}saveChores()}
     else{const p=projects.find(x=>x.id===item.id);if(p){p.task=task;p.cost=document.getElementById("ed-cost").value.trim();p.category=getSelected("ed-cat","ca","other");p.priority=getSelected("ed-pri","pr","medium")}saveProjects()}closeModal()});
 }
 
@@ -383,8 +388,8 @@ function renderChores(){
   else{
     h+=`<div class="fbox"><input class="finput" id="nc-task" placeholder="What's the chore?"><input class="finput" id="nc-min" type="number" placeholder="Estimated minutes" min="1">
     <div class="flabel">Frequency</div><div class="pills" id="nc-freq">${FREQS.map(f=>`<button class="pill" data-fr="${f}">${f}</button>`).join("")}</div>
-    <div class="flabel">Scheduled Days</div><div class="pills" id="nc-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
-    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap days. Leave empty for flexible.</div>
+    <div id="nc-days-wrap"><div class="flabel">Scheduled Days</div><div class="pills" id="nc-days">${DAYS.map((d,i)=>`<button class="pill" data-dy="${i}">${d}</button>`).join("")}</div>
+    <div style="font-size:12px;color:#999;margin-bottom:12px">Tap days. Leave empty for flexible.</div></div>
     <div class="flabel">Area</div><div class="pills" id="nc-zone">${ZO.map(z=>`<button class="pill" data-zo="${z}">${ZC[z].icon} ${ZC[z].label}</button>`).join("")}</div>
     <div style="display:flex;gap:8px"><button class="btnp" style="flex:1" id="do-add-chore">Add</button><button class="btns" id="cancel-add-chore">Cancel</button></div></div>`;
   }
@@ -518,11 +523,25 @@ function renderChores(){
   }));
   document.getElementById("close-peek")?.addEventListener("click",()=>{peekDay=null;renderChores()});
   document.getElementById("cancel-add-chore")?.addEventListener("click",()=>{showForm.chore=false;renderChores()});
-  if(showForm.chore){pillSelect("nc-freq","fr","Weekly");pillSelect("nc-zone","zo","Whole House");document.querySelectorAll("#nc-days .pill").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("on")))}
+  if(showForm.chore){
+    pillSelect("nc-freq","fr","Weekly");pillSelect("nc-zone","zo","Whole House");
+    document.querySelectorAll("#nc-days .pill").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("on")));
+    // Hide/show days based on frequency
+    function updateDaysVis(){
+      const freq=getSelected("nc-freq","fr","Weekly");
+      const wrap=document.getElementById("nc-days-wrap");
+      if(wrap)wrap.style.display=freq==="Daily"?"none":"";
+    }
+    document.querySelectorAll("#nc-freq .pill").forEach(b=>b.addEventListener("click",()=>setTimeout(updateDaysVis,10)));
+    updateDaysVis();
+  }
   document.getElementById("do-add-chore")?.addEventListener("click",()=>{
     const task=document.getElementById("nc-task")?.value.trim();if(!task)return;
-    const days=[];document.querySelectorAll("#nc-days .pill.on").forEach(b=>days.push(parseInt(b.dataset.dy)));
-    chores.push({id:"c-"+uid(),task,frequency:getSelected("nc-freq","fr","Weekly"),zone:getSelected("nc-zone","zo","Whole House"),minutes:parseInt(document.getElementById("nc-min")?.value)||15,days});
+    const freq=getSelected("nc-freq","fr","Weekly");
+    let days=[];
+    if(freq==="Daily"){days=[0,1,2,3,4,5,6]}
+    else{document.querySelectorAll("#nc-days .pill.on").forEach(b=>days.push(parseInt(b.dataset.dy)))}
+    chores.push({id:"c-"+uid(),task,frequency:freq,zone:getSelected("nc-zone","zo","Whole House"),minutes:parseInt(document.getElementById("nc-min")?.value)||15,days});
     saveChores();showForm.chore=false;renderChores();
   });
 }
