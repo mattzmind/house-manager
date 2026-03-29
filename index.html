@@ -442,7 +442,7 @@ function renderChores(){
     let cls="wg-day";if(isToday)cls+=" wg-today";if(isPast&&!isPeek)cls+=" wg-past";
     if(isPeek)cls+=" wg-today"; // highlight selected
     h+=`<div class="${cls}" data-peek="${d}" style="cursor:pointer${isPeek?";background:#2d3436;color:#fff;border-color:#2d3436":""}"><span class="wg-label">${DAYS[d]}</span>
-    <div style="font-size:11px;margin-top:3px;${isPeek?"color:#ccc":"color:#aaa"}">${sched.length||"—"}</div></div>`;
+    <div style="font-size:14px;margin-top:3px;font-weight:500;${isPeek?"color:#fff":"color:#2d3436"}">${dayDate.getDate()}</div></div>`;
   }
   h+=`</div>`;
 
