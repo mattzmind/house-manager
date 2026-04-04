@@ -271,12 +271,20 @@ function scheduledFor(dayNum){
 function getMissed(){
   const today=new Date().getDay();
   const ws=weekStart();
+  const ts=todayStart();
   let missed=[];
   for(let d=0;d<today;d++){
     const dateStart=new Date(ws);dateStart.setDate(dateStart.getDate()+d);
     const scheduled=scheduledFor(d);
     scheduled.forEach(c=>{
-      if(!isDoneForDate(c,dateStart)&&!missed.find(m=>m.id===c.id)){
+      // Skip if already in list, or if completed/skipped today (catch-up done)
+      if(missed.find(m=>m.id===c.id))return;
+      if(doneOnDate(c.id,ts)||skippedOnDate(c.id,ts))return;
+      // For weekly: if done this week at all, not missed
+      if(c.frequency==="Weekly"&&(doneThisWeek(c.id)||skippedThisWeek(c.id)))return;
+      // For daily: only missed if it was a past day and not done on that day
+      if(c.frequency==="Daily"&&isDoneForDate(c,dateStart))return;
+      if(!isDoneForDate(c,dateStart)){
         missed.push({...c,missedDay:DAYS[d]});
       }
     });
@@ -284,7 +292,8 @@ function getMissed(){
   // Also add unscheduled overdue chores (no days set, past their cycle)
   chores.forEach(c=>{
     if(c.days&&c.days.length>0)return;
-    if(!isDoneForDate(c,todayStart())&&!missed.find(m=>m.id===c.id)){
+    if(doneOnDate(c.id,ts)||skippedOnDate(c.id,ts))return;
+    if(!isDoneForDate(c,ts)&&!missed.find(m=>m.id===c.id)){
       missed.push({...c,missedDay:"overdue"});
     }
   });
